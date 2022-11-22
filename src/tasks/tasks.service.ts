@@ -29,4 +29,15 @@ export class TasksService {
     this.tasks.push(task);
     return task;
   }
+
+  deleteTask(id: string): Task[] {
+    return this.tasks.filter(task => task.id !== id)
+  }
+
+  updateTaskField(id: string, field: string, newValue: any): Task {
+    const task = this.getTaskById(id);
+    console.log(field)
+    task[field] = newValue
+    return task;
+  }
 }
