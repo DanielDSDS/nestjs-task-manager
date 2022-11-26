@@ -51,13 +51,13 @@ export class TasksService {
   }
 
   deleteTask(id: string): Task[] {
-    return this.tasks.filter(task => task.id !== id)
+    const found = this.getTaskById(id);
+    return this.tasks.filter(task => task.id !== found.id)
   }
 
-  updateTaskField(id: string, field: string, newValue: any): Task {
+  updateTaskStatus(id: string, status: TaskStatus): Task {
     const task = this.getTaskById(id);
-    console.log(field)
-    task[field] = newValue
+    task.status = status;
     return task;
   }
 }
