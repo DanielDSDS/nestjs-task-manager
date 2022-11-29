@@ -44,19 +44,19 @@ export class TasksController {
     return this.tasksService.createTask(CreateTaskDTO);
   }
 
-  //@Delete('/:id')
-  //deleteTask(
-  //@Param('id') id: string
-  //): Task[] {
-  //return this.tasksService.deleteTask(id);
-  //}
+  @Delete('/:id')
+  deleteTask(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<void> {
+    return this.tasksService.deleteTask(id);
+  }
 
-  //@Patch('/:id/status')
-  //updateTaskStatus(
-  //@Param('id') id: string,
-  //@Body('status', TaskStatusValidationPipe) status: TaskStatus
-  //): Task {
-  //return this.tasksService.updateTaskStatus(id, status);
-  //}
+  @Patch('/:id/status')
+  updateTaskStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status', TaskStatusValidationPipe) status: TaskStatus
+  ): Promise<Task> {
+    return this.tasksService.updateTaskStatus(id, status);
+  }
 
 }
