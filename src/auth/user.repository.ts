@@ -16,7 +16,7 @@ export class UserRepository extends Repository<User> {
 
     const user = new User();
     user.username = username;
-    user.salt = await bcrypt.genSalt()
+    user.salt = await bcrypt.genSalt();
     user.password = await this.hashPassword(password, user.salt);
 
     try {
@@ -30,7 +30,17 @@ export class UserRepository extends Repository<User> {
     }
   }
 
+  async validateUserPassword(authCredentialsDto: AuthCredentialsDto): Promise<string> {
+    const { username, password } = authCredentialsDto;
+    const user = await this.findOneBy({ username });
+
+    if (user && await user.validatePassword(password))
+      return user.username
+
+    return null
+  }
+
   private async hashPassword(password: string, salt: string): Promise<string> {
-    return bcrypt.hash(password, salt);
+    return await bcrypt.hash(password, salt);
   }
 }
