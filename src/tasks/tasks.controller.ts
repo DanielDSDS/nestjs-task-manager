@@ -5,7 +5,11 @@ import { CreateTaskDTO } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter';
 import { Task } from './task.entity';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
+import { UseGuards } from '@nestjs/common/decorators/core/use-guards.decorator';
+import { AuthGuard } from '@nestjs/passport';
+
 @Controller('tasks')
+@UseGuards(AuthGuard())
 export class TasksController {
   constructor(private tasksService: TasksService) { }
 
@@ -27,9 +31,6 @@ export class TasksController {
 
     return found
   }
-
-  //return this.tasksService.getTaskById(id);
-  //}
 
   @Post()
   @UsePipes(ValidationPipe)
